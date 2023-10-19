@@ -19,7 +19,7 @@ import Layout from "./components/Layout";
 function App() {
   return (
     <PassageProvider appId={process.env.REACT_APP_PASSAGE_APP_ID}>
-      <div>
+      <div >
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
