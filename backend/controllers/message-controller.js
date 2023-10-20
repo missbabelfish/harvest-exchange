@@ -18,16 +18,98 @@ router.get("/", async (req, res) => {
 
 
   router.get("/penpals/:userId", async (req, res) => {
+    console.log("Getting penpals for " +req.params.userId);
     try {
-        const getmessages = await Message.aggregate(  [
+        const getmessages = await Message.aggregate(  
+          [
             {
+              $match: {
+                fromUserID: req.params.userId,
+              },
+            },
+            {
+              $addFields: {
+                to: {
+                  $toObjectId: "$toUserID",
+                },
+              },
+            },
+            {
+              $lookup: {
+                from: "users",
+                localField: "to",
+                foreignField: "_id",
+                as: "toUser",
+              },
+            },
+            {
+              $unwind: "$toUser",
+            },
+            {
+              $project: {
+                _id: 0,
+                Id: "$toUser._id",
+                firstname: "$toUser.firstname",
+                lastname: "$toUser.lastname",
+                seen: "$readByToUser",
+                sentAt: "$sendAt",
+              },
+            },
+            {
+              $group: {
+                _id: {
+                  Id: "$Id",
+                  firstname: "$firstname",
+                  lastname: "$lastname",
+                  seen: "$seen",
+                },
+                unread: {
+                  $sum: {
+                    $switch: {
+                      branches: [
+                        {
+                          case: {
+                            $eq: ["$seen", true],
+                          },
+                          then: 0,
+                        },
+                        {
+                          case: {
+                            $eq: ["$seen", false],
+                          },
+                          then: 1,
+                        },
+                      ],
+                    },
+                  },
+                },
+                mostRecent: {
+                  $max: "$sentAt",
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                Id: "$_id.Id",
+                firstname: "$_id.firstname",
+                lastname: "$_id.lastname",
+                mostRecent: "$mostRecent",
+                unread: {
+                  $gt: ["unread", 0],
+                },
+              },
+            }
+
+            /*            {
               $match: {
                 fromUserID: req.params.userId
               }
             },
-            { $group: { _id: '$toUserID' } }
-          ],
+            { $group: { _id: '$toUserID' } }  */
+          ], 
           { maxTimeMS: 60000, allowDiskUse: true }
+          
         );
         res.status(200).json({ writers: getmessages});
     } catch (err) {
