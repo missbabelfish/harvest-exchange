@@ -3,7 +3,6 @@ import React from 'react'
 import axios from 'axios'
 //import { useParams } from 'react-router-dom';
 import { usePassageUserInfo } from "../hooks/";
-import LogoutButton from "../components/LogoutButton";
 import { Link } from 'react-router-dom'
 
 var  SERVER_URL=process.env.SERVER_URL;
@@ -52,24 +51,4 @@ console.log("loading:", loading);
             </td>
         </tr>
     ))
-
-
-    return (
-        <div>
-            <h1>Inbox</h1>
-            <table className={styles.Grid}>
-               <thead>
-                <tr>
-                    <td>Recipient</td>
-                    <td>Last Message</td>
-                    <td>Unread?</td>
-                </tr>
-                </thead> 
-                {listingElements}
-            </table>
-            <LogoutButton />
-        </div>
-            )
-
-
 }

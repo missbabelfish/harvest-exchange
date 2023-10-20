@@ -1,16 +1,19 @@
 * {
   box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
   margin: 0px;
   height: 100vh;
   font-family: sans-serif;
-  background-color: #e5e5e5;
+  background-color: #b3cf9d;
   position: relative;
+  
 }
 
 iframe#webpack-dev-server-client-overlay {
   display: none !important;
   visibility: hidden !important;
 }
+
