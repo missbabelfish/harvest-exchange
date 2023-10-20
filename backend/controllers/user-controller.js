@@ -65,7 +65,7 @@ router.post("/getUserProfile", async (req, res) => {
 //   }
 // });
 
-//retrieve information from one user by their passage ID
+// retrieve information from one user by their passage ID
 // router.get("/getUserProfile/:psg_auth_token", async (req, res) => {
 //     try {
 //         const getUser = await User.findOne({_id: req.params.psg_auth_token})

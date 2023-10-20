@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Passage, Session, User } from "@passageidentity/passage-js";
-import { usePassageUserInfo } from "../hooks/";
 import { PassageAuthGuard } from "@passageidentity/passage-react";
 import { usePassage } from "@passageidentity/passage-react";
 
@@ -9,40 +8,49 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
 
 export default function CreateListing() {
-  // get user metadata from passage session
-  const { userInfo } = usePassageUserInfo();
 
-  const [listing, setListing] = React.useState({
-    userId: "",
-    username: "",
-    firstname: "",
-    zipcode: "",
-    category: "",
-    title: "",
-    text: "",
-    // does this need to be a string or number
-    price: "",
-    unit: "",
-    image: "",
-  });
+const [userData, setUserData] = useState(null);
+
+const [listing, setListing] = useState({
+  userId: "",
+  username: "",
+  firstname: "",
+  location: "",
+  category: "",
+  title: "",
+  text: "",
+  // does this need to be a string or number
+  price: "",
+  unit: "",
+  image: "",
+});
 
   useEffect(() => {
-    if (userInfo) {
-      setListing((prevState) => ({
-        ...prevState,
-        userId: userInfo.id,
-      }));
+    const getUserData = async () => {
+      // Retrieve the auth token from localStorage
+      const authToken = localStorage.getItem('psg_auth_token');
+      console.log(authToken)
+
+      // Make API call to fetch user details using the auth token
+      try {
+        const response = await fetch("http://localhost:8000/user/getUserProfile", {
+            method: "POST", // or 'PUT'
+            headers: {
+                "Authorization": `Bearer ${authToken}`
+            }
+        });
+
+        // Set the user data in state
+        const data = await response.json()
+        console.log(data)
+        setUserData(data);
+    } catch (error) {
+        // Handle error if the API call fails
+        console.error(error);
     }
-    if (userInfo.user_metadata) {
-      setListing((prevState) => ({
-        ...prevState,
-        username: userInfo.user_metadata.username,
-        firstname: userInfo.user_metadata.first_name,
-        zipcode: userInfo.user_metadata.zip_code,
-      }));
-    }
-    console.log(userInfo);
-  }, [userInfo]);
+};
+getUserData();
+}, []);
 
   // POST form data to DB
   // const handleSubmit = (event) => {
@@ -55,7 +63,7 @@ export default function CreateListing() {
   // handle form changes, manage state
   // const handleChange = e => {
   //     setListing({
-  //         ...listing,
+  //         ...prevListing,
   //         [e.target.name] : e.target.value
   //     })
   // }
