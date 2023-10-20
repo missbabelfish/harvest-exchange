@@ -1,12 +1,18 @@
 .footer {
-    background-color: green;
-    color: rgb(9, 28, 92);
+    background: linear-gradient(#175f3a,#114b2d,#175f3a);
+    color: white;
     display: flex;
-    font-size: 18px;
-    height: 2rem;
+    font-size: 15px;
+    height: 1rem;
     justify-content: space-between;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     align-items: center;
     width: 100%;
+    border-radius: 4px 4px 0px 0px;
+    padding:1rem 5rem;
+}
+
+.footer a {
+    color: white;
 }

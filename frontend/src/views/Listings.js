@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import LogoutButton from "../components/LogoutButton";
+import styles from '../styles/App.module.css'
 
 export default function Listing() {
     // initialize state
@@ -22,7 +23,7 @@ export default function Listing() {
         <div key={listing._id}>
             <Link to={`/listings/${listing._id}`}>
                 <img className="listing-img-lrg" src={listing.imageUrl} />
-                <div>
+                <div className={styles.listing}>
                     <h3>{listing.title}</h3>
                     <p>${listing.price}/${listing.unit}</p>
                     <p>{listing.text}</p>
@@ -33,11 +34,11 @@ export default function Listing() {
 
 
     return (
-        <>
-            <h1>Browse Listings</h1>
+        <div className={styles.view}>
+            <h1 >Browse Listings</h1>
             {listingElements}
-            <LogoutButton />
-        </>
+            {/* <LogoutButton /> */}
+        </div>
     )
 }
 
