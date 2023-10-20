@@ -6,7 +6,7 @@ import { usePassageLogout } from "../hooks";
 
 
 
-export default (props) => {
+export const Sidebar = () => {
   return (
     <Menu right>
       <ul className="bm-menu">
@@ -42,3 +42,5 @@ export default (props) => {
     </Menu>
   );
 };
+
+export default Sidebar
