@@ -17,6 +17,7 @@ router.post("/getUserProfile", async (req, res) => {
         const userID = await passage.authenticateRequest(req);
         if (userID) {
             // user is authenticated
+            console.log(userID)
             const { email, phone, user_metadata } = await passage.user.get(userID);
             const identifier = email ? email : phone;
             const getUser = await User.findOne({passage_id: identifier});
