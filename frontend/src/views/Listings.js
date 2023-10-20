@@ -3,7 +3,6 @@ import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import LogoutButton from "../components/LogoutButton";
-import styles from '../styles/App.module.css'
 
 export default function Listing() {
     // initialize state

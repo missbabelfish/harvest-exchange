@@ -3,7 +3,6 @@ import React from 'react'
 import axios from 'axios'
 //import { useParams } from 'react-router-dom';
 import { usePassageUserInfo } from "../hooks/";
-import LogoutButton from "../components/LogoutButton";
 import { Link } from 'react-router-dom'
 
 var  SERVER_URL=process.env.SERVER_URL;
