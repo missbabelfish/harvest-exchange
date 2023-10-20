@@ -12,7 +12,9 @@ export const usePassageUserInfo = () => {
       setLoading(true);
 
       try {
-        getCurrentUser().userInfo().then((r) => setUserInfo(r));
+        const userInfo = await getCurrentUser().userInfo();
+        setUserInfo(userInfo);
+        console.log('user info set')
       } catch (err) {
         console.log(err)
       } finally {
