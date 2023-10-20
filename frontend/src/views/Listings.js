@@ -1,3 +1,4 @@
+import styles from "../styles/Listings.module.css";
 import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
@@ -22,10 +23,12 @@ export default function Listing() {
         // assign key with item id so react doesn't get mad
         <div key={listing._id}>
             <Link to={`/listings/${listing._id}`}>
-                <img className="listing-img-lrg" src={listing.imageUrl} />
-                <div className={styles.listing}>
+
+                <img className={styles.ImgLrg} src={listing.imageUrl}  alt="" />
+                <div className={styles.Item}>
+
                     <h3>{listing.title}</h3>
-                    <p>${listing.price}/${listing.unit}</p>
+                    <p className={styles.Price}>${listing.price}/{listing.unit}</p>
                     <p>{listing.text}</p>
                 </div>
             </Link>

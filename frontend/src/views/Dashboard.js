@@ -6,6 +6,9 @@ import LogoutButton from "../components/LogoutButton";
 function Dashboard() {
   const { userInfo, loading } = usePassageUserInfo();
 
+  console.log("userInfo:", userInfo);
+  console.log("loading:", loading);
+
   if (loading) {
     return (
       <div className={styles.dashboard}>
