@@ -73,8 +73,14 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }    
 
 
-/* Styling of overlay */
+/* Styling of overlay
+using top and left - sets overlay to full screen 
+when menu is on right side. Use 'right' instead 
+if menu is on left. Built in functionality - Clicking on the 
+overlay (outside of menu) will close the menu */
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
+  top: 0px;
+  left: 0px;
 }
 /*End Burger CSS*/
