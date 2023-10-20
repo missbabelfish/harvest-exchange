@@ -1,9 +1,30 @@
 
 .mainContainer {
-    padding: 2rem;
+    padding: 4rem;
+    
+    
 }
-
 
 .listing-img-large {
     max-height: 65vh;
 }
+
+.view h1 {
+    color: #012f2d;
+    padding: 4rem;
+}
+
+.view .listing {
+    border: solid 1px #d6f0bc;
+    border-radius: 8px;
+    padding: 0.5rem 4rem;
+    background: linear-gradient(#d6f0bc,#d6f0bc);
+    color: #012f2d;
+    }
+
+.view p  {
+    color: #012f2d;
+    margin-right:15rem;
+    padding-left: 8rem;
+}
+
