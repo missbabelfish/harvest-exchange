@@ -21,14 +21,18 @@ console.log("listing:", listings);
 console.log("loading:", loading);
 
     // fetch listings from db
-    React.useEffect(() => {
-        const getAllListings = async () => {
-            const allListings = await axios.get(SERVER_URL+'/message/penpals/'+ userInfo.id); //6530076dd128d58567d48136'); // 
-            console.log(allListings.data.writers)
-            setListings(allListings.data.writers)
+    React.useEffect(() => 
+    {
+        if (userInfo)
+        {
+            const getAllListings = async () => {
+                const allListings = await axios.get(SERVER_URL+'/message/penpals/'+ userInfo.id); //6530076dd128d58567d48136'); // 
+                console.log(allListings.data.writers)
+                setListings(allListings.data.writers)
+            };
+            getAllListings();
         }
-        getAllListings()
-    }, [])
+    }, [userInfo])
 
     const listingElements = 
     listings.map(listing => (
