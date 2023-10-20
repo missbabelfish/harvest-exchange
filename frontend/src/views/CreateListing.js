@@ -10,6 +10,7 @@ import { useAuthStatus } from "../hooks/useAuthStatus";
 export default function CreateListing() {
 
 const [userData, setUserData] = useState(null);
+const [userID, setUserID] = useState()
 
 const [listing, setListing] = useState({
   userId: "",
@@ -43,7 +44,8 @@ const [listing, setListing] = useState({
         // Set the user data in state
         const data = await response.json()
         console.log(data)
-        setUserData(data);
+        setUserData(data)
+        setUserID(data._id);
     } catch (error) {
         // Handle error if the API call fails
         console.error(error);
@@ -52,119 +54,129 @@ const [listing, setListing] = useState({
 getUserData();
 }, []);
 
-  // POST form data to DB
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   // Handle form submission logic here
-  //   const form = e.target;
-  //   const formData = new FormData(form);
-  // };
+//   POST form data to DB
+  const handleSubmit = (event) => {
+    console.log(`form submit`)
+    // event.preventDefault();
+    // // Handle form submission logic here
+    // const form = e.target;
+    // const formData = new FormData(form);
+  };
 
-  // handle form changes, manage state
-  // const handleChange = e => {
-  //     setListing({
-  //         ...prevListing,
-  //         [e.target.name] : e.target.value
-  //     })
-  // }
+//   handle form changes, manage state
+  function handleChange(e) {
+    setListing({
+        ...listing,
+        [e.target.name] : e.target.value
+    })
+  }
 
-  //     return (
-  //         <PassageAuthGuard
-  //         // displays if not logged in
-  //           unAuthComp={
-  //             <div>
-  //               <div>you must be logged in</div>
-  //               <div>
-  //                 <a href="/">Login</a>
-  //               </div>
-  //             </div>
-  //           }
-  //         >
-  //             {/* displays if logged in */}
-  //           <div>
-  //             <h1>Create Listing</h1>
-  //             <form method="post" onSubmit={handleSubmit}>
-  //             <div>
-  //                 <label htmlFor="username">Username</label>
-  //                 <input
-  //                 type="text"
-  //                 id="username"
-  //                 value={username}
-  //                 //   onChange={handleChange} - non-editable field
-  //                 />
-  //             </div>
-  //             <div>
-  //                 <label htmlFor="firstName">First Name</label>
-  //                 <input
-  //                 type="text"
-  //                 id="firstName"
-  //                 value={firstName}
-  //                 //   onChange={handleChange} - non-editable field
-  //                 />
-  //             </div>
-  //             <div>
-  //                 <label htmlFor="zipCode">Zip Code</label>
-  //                 <input
-  //                 type="number"
-  //                 id="zipCode"
-  //                 value={zipCode}
-  //                 onChange={handleChange}
-  //                 />
-  //             </div>
-  //             <div>
-  //                 <label htmlFor="category">Category</label>
-  //                 <select id="category" value={category} onChange={handleChange}>
-  //                 <option value="">Select category</option>
-  //                 {/* Add options for categories */}
-  //                 </select>
-  //             </div>
-  //             <div>
-  //                 <label htmlFor="title">Title</label>
-  //                 <input
-  //                 type="text"
-  //                 id="title"
-  //                 value={title}
-  //                 onChange={handleChange}
-  //                 />
-  //             </div>
-  //             <div>
-  //                 <label htmlFor="text">Description</label>
-  //                 <input
-  //                 type="text"
-  //                 id="text"
-  //                 value={text}
-  //                 onChange={handleChange}
-  //                 />
-  //             </div>
-  //             <div>
-  //                 <label htmlFor="price">Price</label>
-  //                 <input
-  //                 type="number"
-  //                 id="price"
-  //                 value={price}
-  //                 onChange={handleChange}
-  //                 />
-  //             </div>
-  //             <div>
-  //                 <label htmlFor="unit">Unit</label>
-  //                 <select id="unit" value={unit} onChange={handleChange}>
-  //                 <option value="">Select unit</option>
-  //                 {/* Add options for units */}
-  //                 </select>
-  //             </div>
-  //             <div>
-  //                 <label htmlFor="image">Image</label>
-  //                 <input
-  //                 type="text"
-  //                 id="image"
-  //                 value={image}
-  //                 onChange={handleChange}
-  //                 />
-  //             </div>
-  //             <button type="submit">Submit</button>
-  //             {/* need cancel button */}
-  //             </form>
-  //           </div>
-  //         </PassageAuthGuard>
-  //   );
+      return (
+          <PassageAuthGuard
+          // displays if not logged in
+            unAuthComp={
+              <div>
+                <div>you must be logged in</div>
+                <div>
+                  <a href="/">Login</a>
+                </div>
+              </div>
+            }
+          >
+              {/* displays if logged in */}
+            <div>
+              <h1>Create Listing</h1>
+              {userData && <p><span className="formBold">Username:</span> {userData.username}</p>}
+              {userData && <p><span className="formBold">First Name:</span> {userData.firstname}</p>}
+
+              <form method="post" onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="Location">
+                        Zip Code or Address
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            value={listing.location}
+                            onChange={handleChange}
+                        />    
+                    </label>
+                </div>
+                <div>
+                    <label htmlFor="category">
+                        Category:
+                        <select id="category" name="category" value={listing.category} onChange={handleChange}>
+                            <option value="produce">Produce</option>
+                            <option value="seed">Seeds</option>
+                            <option value="live plant">Live Plants</option>
+                        </select>
+                    </label>
+                </div>
+                <div>
+                    <label htmlFor="title">
+                        Title
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value={listing.title}
+                            onChange={handleChange}
+                        />    
+                    </label>
+                </div>
+                <div>
+                    <label htmlFor="text">
+                        Description:
+                        <input
+                            type="text"
+                            id="text"
+                            name="text"
+                            value={listing.text}
+                            onChange={handleChange}
+                        />    
+                    </label>
+                </div>
+                <div>
+                    <label htmlFor="price">
+                        Price
+                        <input
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            id="price"
+                            name="price"
+                            value={listing.price}
+                            onChange={handleChange}
+                        />    
+                    </label>
+                </div>
+                <div>
+                    <label htmlFor="unit">
+                        Unit
+                        <select id="unit" name="unit" value={listing.unit} onChange={handleChange}>
+                            <option value="lb">lb</option>
+                            <option value="gram">gram</option> 
+                            <option value="ounce">ounce</option>
+                            <option value="pint">pint</option>
+                            <option value="flat">flat</option>
+                            <option value="dozen">dozen</option>
+                        </select>
+                    </label>
+                    
+                </div>
+                <div>
+                    <label htmlFor="image">Image</label>
+                    <input
+                    type="text"
+                    id="image"
+                    name="image"
+                    value={listing.image}
+                    onChange={handleChange}
+                    />
+                </div>
+                <button type="submit">Submit</button>
+              </form>
+            </div>
+          </PassageAuthGuard>
+    );
 }
