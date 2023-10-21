@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const { User } = require("../models");
 const { Listing } = require("../models");
 require("dotenv").config();
@@ -87,7 +88,7 @@ router.post("/", async (req, res) => {
             item.unit = req.body.unit;
             item.zipCoords = { type: "Point", coordinates: [zipInfo.lng, zipInfo.lat]};
             item.image = req.body.image;
-            item.userId = {}
+            item.userID =  req.body.userId;
             console.log("item", item);
 
             const newListing = await Listing.create(item);

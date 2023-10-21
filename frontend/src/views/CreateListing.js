@@ -72,6 +72,7 @@ getUserData();
       })
   };     
      const json = FormToJson(event.target);
+     json["userId"] = userData._id;
     var response = await axios.post(SERVER_URL+'/listing/', json,);
     console.log("response: " + response);
   
