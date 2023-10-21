@@ -7,7 +7,7 @@ const messageController = require("./controllers/message-controller");
 
 const app = express();
 const PORT = 8000;
-const CLIENT_URL = "http://localhost:3001";
+const CLIENT_URL = "http://localhost:3000";
 
 require("dotenv").config();
 require("./config/db.connection");
