@@ -7,6 +7,11 @@ import { usePassage } from "@passageidentity/passage-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
 
+import {FormToJson } from "../utils/utils"
+
+var  SERVER_URL=process.env.SERVER_URL;
+SERVER_URL="http://localhost:8000"
+
 export default function CreateListing() {
 
 const [userData, setUserData] = useState(null);
@@ -26,7 +31,7 @@ const [listing, setListing] = useState({
   image: "",
 });
 
-  useEffect(() => {
+    useEffect(() => {
     const getUserData = async () => {
       // Retrieve the auth token from localStorage
       const authToken = localStorage.getItem('psg_auth_token');
@@ -34,7 +39,7 @@ const [listing, setListing] = useState({
 
       // Make API call to fetch user details using the auth token
       try {
-        const response = await fetch("http://localhost:8000/user/getUserProfile", {
+        const response = await fetch(SERVER_URL+"/user/getUserProfile", {
             method: "POST", // or 'PUT'
             headers: {
                 "Authorization": `Bearer ${authToken}`
@@ -54,6 +59,26 @@ const [listing, setListing] = useState({
 getUserData();
 }, []);
 
+//   POST form data to DB
+  const handleSubmit = async (event) => {
+    console.log(`form submit`)
+     event.preventDefault();
+     if (!listing.userId) {
+      setListing({
+          ...listing, 
+          userId: userData._id,
+          username: userData.username,
+          firstname: userData.firstname
+      })
+  };     
+     const json = FormToJson(event.target);
+     json["userId"] = userData._id;
+    var response = await axios.post(SERVER_URL+'/listing/', json,);
+    console.log("response: " + response);
+  
+
+  };
+
 //   handle form changes, manage state
   function handleChange(e) {
     setListing({
@@ -61,7 +86,7 @@ getUserData();
         [e.target.name] : e.target.value
     })
   }
-
+/*
 //   POST form data to DB
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -87,7 +112,7 @@ getUserData();
         console.error(error)
       }
   };
-
+*/
 
       return (
           <PassageAuthGuard
@@ -115,7 +140,7 @@ getUserData();
                             type="text"
                             id="location"
                             name="location"
-                            value={listing.location}
+                            value={userData && userData.location}
                             onChange={handleChange}
                         />    
                     </label>
@@ -197,4 +222,4 @@ getUserData();
             </div>
           </PassageAuthGuard>
     );
-}
+  }

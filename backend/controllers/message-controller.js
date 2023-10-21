@@ -99,14 +99,13 @@ router.get("/", async (req, res) => {
                   $gt: ["unread", 0],
                 },
               },
-            }
-
-            /*            {
-              $match: {
-                fromUserID: req.params.userId
-              }
             },
-            { $group: { _id: '$toUserID' } }  */
+            {
+              $sort:
+                {
+                  mostRecent: -1,
+                },
+            },
           ], 
           { maxTimeMS: 60000, allowDiskUse: true }
           

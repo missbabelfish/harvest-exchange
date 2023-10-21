@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const { User } = require("../models");
 const { Listing } = require("../models");
 const Passage = require("@passageidentity/passage-node");
@@ -80,7 +81,7 @@ router.get("/user/:id", async (req, res) => {
 // creates user listing
 router.post("/", async (req, res) => {
     try {
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      // Mary R's changes
         const userID = await passage.authenticateRequest(req);
         if (userID) {
             // user is authenticated
@@ -107,6 +108,30 @@ router.post("/", async (req, res) => {
             };
         }
     }catch (err) {
+      /*   James C's changes
+        const location = req.body.location;
+        fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=${process.env.GEOCODE_API_KEY}&location=${location}`)
+        .then((res) => res.json())
+        .then( async (json) => {
+            const zipInfo = (json.results[0].locations[0].latLng);
+            var item = new Listing();
+            item.title = req.body.title;
+            item.category = req.body.category;
+            item.text = req.body.text;
+            item.price = req.body.price;
+            item.unit = req.body.unit;
+            item.zipCoords = { type: "Point", coordinates: [zipInfo.lng, zipInfo.lat]};
+            item.image = req.body.image;
+            item.userID =  req.body.userId;
+            console.log("item", item);
+
+            const newListing = await Listing.create(item);
+//            console.log("newListing", newListing);
+            res.status(200).json(newListing);
+        })
+        .catch(console.error);
+    } catch (err) {
+    */
         res.status(400).json({ error: err.message });
     }
 });

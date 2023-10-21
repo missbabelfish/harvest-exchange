@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { faker } from "@faker-js/faker";
-import { Avatar } from "./Avatar";
+import { Avatar } from "./avatar";
 import styles from "../styles/ChatBox.module.css";
 import {LoadingSpinner} from "./LoadingSpinner";
 
