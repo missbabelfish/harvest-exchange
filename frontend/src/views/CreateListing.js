@@ -17,12 +17,12 @@ const [listing, setListing] = useState({
   username: "",
   firstname: "",
   location: "",
-  category: "",
+  category: "produce",
   title: "",
   text: "",
   // does this need to be a string or number
   price: "",
-  unit: "",
+  unit: "lb",
   image: "",
 });
 
@@ -54,15 +54,6 @@ const [listing, setListing] = useState({
 getUserData();
 }, []);
 
-//   POST form data to DB
-  const handleSubmit = (event) => {
-    console.log(`form submit`)
-    // event.preventDefault();
-    // // Handle form submission logic here
-    // const form = e.target;
-    // const formData = new FormData(form);
-  };
-
 //   handle form changes, manage state
   function handleChange(e) {
     setListing({
@@ -70,6 +61,33 @@ getUserData();
         [e.target.name] : e.target.value
     })
   }
+
+//   POST form data to DB
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // set userID in listing state
+    if (!listing.userId) {
+        setListing({
+            ...listing, 
+            userId: userData._id,
+            username: userData.username,
+            firstname: userData.firstname
+        })
+    }
+    console.log(listing)
+    // Handle form submission logic here
+    const form = e.target;
+    const formData = new FormData(form);
+    console.log(formData)
+    try {
+        // make axios post request
+        const response = await axios.post("http://localhost:8000/listing/", formData)
+        console.log(response)
+      } catch(error) {
+        console.error(error)
+      }
+  };
+
 
       return (
           <PassageAuthGuard
