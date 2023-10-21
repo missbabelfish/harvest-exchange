@@ -89,6 +89,7 @@ router.post("/", async (req, res) => {
             const getUser = await User.findOne({passage_id: identifier});
             if (getUser) { 
                 const location = req.body.location
+                console.log(location)
                 fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=${process.env.GEOCODE_API_KEY}&location=${location}`)
                 .then((res) => res.json())
                 .then( async (json) => {
