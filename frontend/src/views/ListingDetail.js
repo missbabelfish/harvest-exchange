@@ -20,7 +20,7 @@ export default function ListingDetail() {
         <div>
             {listing ? (
                 <div>
-                    <img src={listing.image} alt="Listing"/>
+                    <img src={listing.image || 'https://picsum.photos/300/400' } alt={listing.text}/>
                     <p>{listing.category}</p>
                     <h2>{listing.title}</h2>
                     <p>posted on {listing.createdAt}</p>
