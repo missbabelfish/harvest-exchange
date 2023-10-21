@@ -29,6 +29,9 @@ export default function ListingDetail() {
                     <button>
                         <a href="/chat">Message</a>
                     </button>
+                    <button>
+                        <a href="/listings">Back to All Listings</a>
+                    </button>
                 </div>
             ) : <h2>Loading...</h2>}
         </div>

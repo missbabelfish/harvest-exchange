@@ -1,23 +1,14 @@
 import { Link } from "react-router-dom";
 import styles from '../styles/Header.module.css';
-import { usePassageLogout } from "../hooks";
-import { useNavigate } from "react-router-dom";
 import Sidebar from './Sidebar';
 import logo from '../styles/imgs/HarvestExchangeLogo-181x76-removebg-preview.png'
 
 function Header() {
-    const { logout } = usePassageLogout();
-
-    const navigate = useNavigate();
-
-    const signout = () => {
-        logout();
-        navigate("/");
-    };
-
 
     return ( 
+
         <div className={styles.mainHeader}>
+
 
             <Link to={'/'}>
             
@@ -29,7 +20,7 @@ function Header() {
                 
             </Link> 
              
-            <Link to={'/'} className={styles.headerText}>Harvest Exchange</Link>
+            <Link to={'/'} styles={styles.headerLogo}>Harvest Exchange</Link>
             
            
 

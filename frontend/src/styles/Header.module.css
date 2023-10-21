@@ -9,21 +9,15 @@
   border-radius: 0px 0px 4px 4px;
   position: fixed;
   width: 100%;
+  font-family: 'Satisfy', Tahoma, Geneva, Verdana, sans-serif;
   
-}
-
-
-
-.headerText {
-  font-size: 24px;
-  margin: 0px 10px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .mainHeader a {
   color: white;
-
 }
+
+
 ul {
   display: flex;
   list-style-type: none;
