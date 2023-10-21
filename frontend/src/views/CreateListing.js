@@ -18,7 +18,7 @@ const [userData, setUserData] = useState(null);
 const [userID, setUserID] = useState()
 
 const [listing, setListing] = useState({
-  userId: "",
+//   userId: "",  -- already sent in backend
   username: "",
   firstname: "",
   location: "",
@@ -61,6 +61,11 @@ getUserData();
 
 //   POST form data to DB
   const handleSubmit = async (event) => {
+    // Retrieve the auth token from localStorage
+    const authToken = localStorage.getItem('psg_auth_token');
+    console.log(authToken)
+
+
     console.log(`form submit`)
      event.preventDefault();
      if (!listing.userId) {
@@ -73,8 +78,12 @@ getUserData();
   };     
      const json = FormToJson(event.target);
      json["userId"] = userData._id;
-    var response = await axios.post(SERVER_URL+'/listing/', json,);
-    console.log("response: " + response);
+    var response = await axios.post(SERVER_URL+'/listing/', json,{
+        headers: {
+            "authorization" : `Bearer ${authToken}`
+        }
+    });
+    console.log("posted successfully");
   
 
   };
@@ -140,7 +149,7 @@ getUserData();
                             type="text"
                             id="location"
                             name="location"
-                            value={userData && userData.location}
+                            value={listing.location}
                             onChange={handleChange}
                         />    
                     </label>
