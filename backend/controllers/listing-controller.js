@@ -94,10 +94,18 @@ router.post("/", async (req, res) => {
                 fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=${process.env.GEOCODE_API_KEY}&location=${location}`)
                 .then((res) => res.json())
                 .then( async (json) => {
-                    const zipInfo = (json.results[0].locations[0].latLng);
-                    req.body.zipCoords = { type: "Point", coordinates: [zipInfo.lng, zipInfo.lat]};
-                    req.body.userID = getUser._id;
-                    const newListing = await Listing.create(req.body);
+                  const zipInfo = (json.results[0].locations[0].latLng);
+                  var item = new Listing();
+                  item.title = req.body.title;
+                  item.category = req.body.category;
+                  item.text = req.body.text;
+                  item.price = req.body.price;
+                  item.unit = req.body.unit;
+                  item.zipCoords = { type: "Point", coordinates: [zipInfo.lng, zipInfo.lat]};
+                  item.image = req.body.image;
+//                  item.userID =  req.body.userId;
+                  item.userID = getUser._id;
+                  const newListing = await Listing.create(item);
                     res.status(200).json(newListing);
                 }).catch((err) => {
                     res.status(400).json({ error: err.message });
