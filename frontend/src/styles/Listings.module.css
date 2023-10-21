@@ -1,0 +1,18 @@
+.Item
+{
+    background-color: aquamarine;
+    border: 1px solid black ;
+    padding: 1em;
+}
+
+.Price
+{
+    font-weight: bold;
+    font-style: italic;
+    color: Black;
+}
+
+.ImgLrg
+{
+
+}
