@@ -7,6 +7,11 @@ import { usePassage } from "@passageidentity/passage-react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
 
+import {FormToJson } from "../utils/utils"
+
+var  SERVER_URL=process.env.SERVER_URL;
+SERVER_URL="http://localhost:8000"
+
 export default function CreateListing() {
 
 const [userData, setUserData] = useState(null);
@@ -26,7 +31,7 @@ const [listing, setListing] = useState({
   image: "",
 });
 
-  useEffect(() => {
+    useEffect(() => {
     const getUserData = async () => {
       // Retrieve the auth token from localStorage
       const authToken = localStorage.getItem('psg_auth_token');
@@ -55,12 +60,14 @@ getUserData();
 }, []);
 
 //   POST form data to DB
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     console.log(`form submit`)
-    // event.preventDefault();
-    // // Handle form submission logic here
-    // const form = e.target;
-    // const formData = new FormData(form);
+     event.preventDefault();
+     const json = FormToJson(event.target);
+    var response = await axios.post(SERVER_URL+'/listing/', json,);
+    console.log("response: " + response);
+  
+
   };
 
 //   handle form changes, manage state
@@ -97,7 +104,7 @@ getUserData();
                             type="text"
                             id="location"
                             name="location"
-                            value={listing.location}
+                            value={userData && userData.location}
                             onChange={handleChange}
                         />    
                     </label>
@@ -179,4 +186,4 @@ getUserData();
             </div>
           </PassageAuthGuard>
     );
-}
+  }

@@ -51,4 +51,21 @@ console.log("loading:", loading);
             </td>
         </tr>
     ))
+    
+
+    return (
+        <div>
+            <h1>Inbox</h1>
+            <table className={styles.Grid}>
+               <thead>
+                <tr>
+                    <td>Recipient</td>
+                    <td>Last Message</td>
+                    <td>Unread?</td>
+                </tr>
+                </thead> 
+                {listingElements}
+            </table>
+        </div>
+            )
 }

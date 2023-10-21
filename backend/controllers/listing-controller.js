@@ -74,13 +74,23 @@ router.get("/user/:id", async (req, res) => {
 // creates user listing
 router.post("/", async (req, res) => {
     try {
-        const location = req.body.location
+        const location = req.body.location;
         fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=${process.env.GEOCODE_API_KEY}&location=${location}`)
         .then((res) => res.json())
         .then( async (json) => {
             const zipInfo = (json.results[0].locations[0].latLng);
-            req.body.zipCoords = { type: "Point", coordinates: [zipInfo.lng, zipInfo.lat]};
-            const newListing = await Listing.create(req.body);
+            var item = new Listing();
+            item.title = req.body.title;
+            item.category = req.body.category;
+            item.text = req.body.text;
+            item.price = req.body.price;
+            item.unit = req.body.unit;
+            item.zipCoords = { type: "Point", coordinates: [zipInfo.lng, zipInfo.lat]};
+            item.image = req.body.image;
+            console.log("item", item);
+
+            const newListing = await Listing.create(item);
+//            console.log("newListing", newListing);
             res.status(200).json(newListing);
         })
         .catch(console.error);
