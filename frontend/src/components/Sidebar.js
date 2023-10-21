@@ -3,10 +3,21 @@ import { slide as Menu } from 'react-burger-menu';
 import '../styles/Sidebar.css'
 import { Link } from "react-router-dom";
 import { usePassageLogout } from "../hooks";
+import { useNavigate } from 'react-router-dom';
 
 
-export default (props) => {
+export default function Sidebar (props) {
+  const { logout } = usePassageLogout();
+
+  // const navigate = useNavigate();
+
+  // const signout = () => {
+  //     logout();
+  //     navigate("/");
+  // };
+
   const closeMenu = () => document.querySelector(".closeMenu").click()
+
     return (
       <Menu right overlayClassName={"closeMenu"}>
         <ul className="bm-menu">
@@ -20,7 +31,7 @@ export default (props) => {
             <Link to={"/listings"} onClick={closeMenu}>Listings</Link>
           </li>
           <li className="bm-item">
-            <Link to={"/createlisting"} onClick={closeMenu}>Create Listing</Link>
+            <Link to={"/create-listing"} onClick={closeMenu}>Create Listing</Link>
           </li>
           <li className="bm-item">
             <Link to={"/:userID/listings"} onClick={closeMenu}>My Listings</Link>
@@ -35,7 +46,7 @@ export default (props) => {
             <Link to={'/learn'} onClick={closeMenu}>Learn</Link>
           </li>
           <li className="bm-item">
-            <Link to={'/'} onClick={closeMenu} onClick={usePassageLogout}>Sign Out</Link>
+            <Link to={'/'} onClick={ () => {closeMenu(); logout()} }>Sign Out</Link>
           </li> 
               
         </ul>   
@@ -43,4 +54,4 @@ export default (props) => {
   );
 };
 
-export default Sidebar
+// export default Sidebar

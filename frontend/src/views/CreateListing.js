@@ -140,7 +140,7 @@ getUserData();
                             type="text"
                             id="location"
                             name="location"
-                            value={userData && userData.location}
+                            value={listing.location}
                             onChange={handleChange}
                         />    
                     </label>
