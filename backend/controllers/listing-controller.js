@@ -87,6 +87,7 @@ router.post("/", async (req, res) => {
             item.unit = req.body.unit;
             item.zipCoords = { type: "Point", coordinates: [zipInfo.lng, zipInfo.lat]};
             item.image = req.body.image;
+            item.userId = {}
             console.log("item", item);
 
             const newListing = await Listing.create(item);
