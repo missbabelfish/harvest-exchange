@@ -4,7 +4,7 @@ import { Passage, Session, User } from "@passageidentity/passage-js";
 import { PassageAuthGuard } from "@passageidentity/passage-react";
 import { usePassage } from "@passageidentity/passage-react";
 
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
 
 import {FormToJson } from "../utils/utils"
@@ -13,115 +13,115 @@ var  SERVER_URL=process.env.SERVER_URL;
 SERVER_URL="http://localhost:8000"
 
 export default function CreateListing() {
+    const navigate = useNavigate()
 
-const [userData, setUserData] = useState(null);
-const [userID, setUserID] = useState()
+    const [userData, setUserData] = useState(null);
+    const [userID, setUserID] = useState()
 
-const [listing, setListing] = useState({
-//   userId: "",  -- already sent in backend
-  username: "",
-  firstname: "",
-  location: "",
-  category: "produce",
-  title: "",
-  text: "",
-  // does this need to be a string or number
-  price: "",
-  unit: "lb",
-  image: "",
-});
+    const [listing, setListing] = useState({
+    //   userId: "",  -- already sent in backend
+    username: "",
+    firstname: "",
+    location: "",
+    category: "produce",
+    title: "",
+    text: "",
+    // does this need to be a string or number
+    price: "",
+    unit: "lb",
+    image: "",
+    });
 
     useEffect(() => {
-    const getUserData = async () => {
-      // Retrieve the auth token from localStorage
-      const authToken = localStorage.getItem('psg_auth_token');
-      console.log(authToken)
+        const getUserData = async () => {
+        // Retrieve the auth token from localStorage
+        const authToken = localStorage.getItem('psg_auth_token');
+        console.log(authToken)
 
-      // Make API call to fetch user details using the auth token
-      try {
-        const response = await fetch(SERVER_URL+"/user/getUserProfile", {
-            method: "POST", // or 'PUT'
+        // Make API call to fetch user details using the auth token
+        try {
+            const response = await fetch(SERVER_URL+"/user/getUserProfile", {
+                method: "POST", // or 'PUT'
+                headers: {
+                    "Authorization": `Bearer ${authToken}`
+                }
+            });
+
+            // Set the user data in state
+            const data = await response.json()
+            console.log(data)
+            setUserData(data)
+            setUserID(data._id);
+            } catch (error) {
+                // Handle error if the API call fails
+                console.error(error);
+            }
+        };
+        getUserData();
+    }, []);
+
+    //   POST form data to DB
+    const handleSubmit = async (event) => {
+        // Retrieve the auth token from localStorage
+        const authToken = localStorage.getItem('psg_auth_token');
+        console.log(authToken)
+
+
+        console.log(`form submit`)
+        event.preventDefault();
+        if (!listing.userId) {
+            setListing({
+                ...listing, 
+                userId: userData._id,
+                username: userData.username,
+                firstname: userData.firstname
+            })
+        };     
+        const json = FormToJson(event.target);
+        json["userId"] = userData._id;
+        var response = await axios.post(SERVER_URL+'/listing/', json,{
             headers: {
-                "Authorization": `Bearer ${authToken}`
+                "authorization" : `Bearer ${authToken}`
             }
         });
+        const listingId = response.data._id;
+        navigate(`/listings/${listingId}`) 
+    };
 
-        // Set the user data in state
-        const data = await response.json()
-        console.log(data)
-        setUserData(data)
-        setUserID(data._id);
-    } catch (error) {
-        // Handle error if the API call fails
-        console.error(error);
-    }
-};
-getUserData();
-}, []);
-
-//   POST form data to DB
-  const handleSubmit = async (event) => {
-    // Retrieve the auth token from localStorage
-    const authToken = localStorage.getItem('psg_auth_token');
-    console.log(authToken)
-
-
-    console.log(`form submit`)
-     event.preventDefault();
-     if (!listing.userId) {
-      setListing({
-          ...listing, 
-          userId: userData._id,
-          username: userData.username,
-          firstname: userData.firstname
-      })
-  };     
-     const json = FormToJson(event.target);
-     json["userId"] = userData._id;
-    var response = await axios.post(SERVER_URL+'/listing/', json,{
-        headers: {
-            "authorization" : `Bearer ${authToken}`
-        }
-    });
-    console.log("posted successfully");
-  
-
-  };
-
-//   handle form changes, manage state
-  function handleChange(e) {
-    setListing({
-        ...listing,
-        [e.target.name] : e.target.value
-    })
-  }
-/*
-//   POST form data to DB
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // set userID in listing state
-    if (!listing.userId) {
+    //   handle form changes, manage state
+    function handleChange(e) {
         setListing({
-            ...listing, 
-            userId: userData._id,
-            username: userData.username,
-            firstname: userData.firstname
+            ...listing,
+            [e.target.name] : e.target.value
         })
     }
-    console.log(listing)
-    // Handle form submission logic here
-    const form = e.target;
-    const formData = new FormData(form);
-    console.log(formData)
-    try {
-        // make axios post request
-        const response = await axios.post("http://localhost:8000/listing/", formData)
-        console.log(response)
-      } catch(error) {
-        console.error(error)
-      }
-  };
-*/
+    /*
+    //   POST form data to DB
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // set userID in listing state
+        if (!listing.userId) {
+            setListing({
+                ...listing, 
+                userId: userData._id,
+                username: userData.username,
+                firstname: userData.firstname
+            })
+        }
+        console.log(listing)
+        // Handle form submission logic here
+        const form = e.target;
+        const formData = new FormData(form);
+        console.log(formData)
+        try {
+            // make axios post request
+            const response = await axios.post("http://localhost:8000/listing/", formData)
+            console.log(response)
+        } catch(error) {
+            console.error(error)
+        }
+    };
+    */
 
       return (
           <PassageAuthGuard
