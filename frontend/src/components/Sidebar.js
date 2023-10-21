@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { usePassageLogout } from "../hooks";
 
 
-
 export default (props) => {
   const closeMenu = () => document.querySelector(".closeMenu").click()
     return (
@@ -43,3 +42,5 @@ export default (props) => {
       </Menu>
   );
 };
+
+export default Sidebar
