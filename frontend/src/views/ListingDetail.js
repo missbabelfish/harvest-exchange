@@ -26,7 +26,9 @@ export default function ListingDetail() {
                     <p>posted on {listing.createdAt}</p>
                     <p><span>${listing.price}</span>/{listing.unit}</p>
                     <p>{listing.text}</p>
-                    <button>Message</button>
+                    <button>
+                        <a href="/chat">Message</a>
+                    </button>
                 </div>
             ) : <h2>Loading...</h2>}
         </div>
