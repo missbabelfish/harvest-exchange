@@ -15,11 +15,15 @@ export default function ListingDetail() {
         }
         getOne()
     }, [id])
+    // there has GOT to be a better way than this.
+    var chatUrl= "";
+    if (listing)
+        chatUrl = "/chat/"+listing.userID;
 
     return (
         <div>
             {listing ? (
-                <div>
+    <div>
                     <img src={listing.image} alt="Listing"/>
                     <p>{listing.category}</p>
                     <h2>{listing.title}</h2>
@@ -27,7 +31,7 @@ export default function ListingDetail() {
                     <p><span>${listing.price}</span>/{listing.unit}</p>
                     <p>{listing.text}</p>
                     <button>
-                        <a href="/chat">Message</a>
+                        <a href={chatUrl}>Message</a>
                     </button>
                 </div>
             ) : <h2>Loading...</h2>}

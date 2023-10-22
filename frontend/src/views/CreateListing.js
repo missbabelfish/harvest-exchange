@@ -6,13 +6,13 @@ import { usePassage } from "@passageidentity/passage-react";
 
 import { useNavigate } from "react-router-dom";
 import { useAuthStatus } from "../hooks/useAuthStatus";
+import {GetUserProfile, ServerUrl} from '../utils/utils'
 
 import {FormToJson } from "../utils/utils"
 
-var  SERVER_URL=process.env.SERVER_URL;
-SERVER_URL="http://localhost:8000"
 
 export default function CreateListing() {
+  var  SERVER_URL=ServerUrl();
 
 const [userData, setUserData] = useState(null);
 const [userID, setUserID] = useState()

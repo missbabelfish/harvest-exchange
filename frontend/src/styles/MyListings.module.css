@@ -1,0 +1,21 @@
+/*
+   This is presently identical to Listings.Module.css, until we decide to make them look different */
+
+.Item
+{
+    background-color: aquamarine;
+    border: 1px solid black ;
+    padding: 1em;
+}
+
+.Price
+{
+    font-weight: bold;
+    font-style: italic;
+    color: Black;
+}
+
+.ImgLrg
+{
+
+}

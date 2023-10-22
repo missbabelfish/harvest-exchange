@@ -62,7 +62,7 @@ router.get("/:id", async (req, res) => {
   try {
     const getOneListing = await Listing.findOne({ _id: req.params.id });
     
-    res.status(200).json(getOneListing);
+    res.status(200).json(getOneListing||[]);
   } catch (err) {
     res.status(400).json({ error: err });
   }
