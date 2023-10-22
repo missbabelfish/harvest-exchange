@@ -3,7 +3,6 @@ const Passage = require("@passageidentity/passage-node");
 const cors = require("cors");
 const userController = require("./controllers/user-controller");
 const listingController = require("./controllers/listing-controller")
-const messageController = require("./controllers/message-controller");
 
 const app = express();
 const PORT = 8000;
@@ -21,7 +20,11 @@ app.use(
 
 app.use("/user", userController);
 app.use("/listing", listingController)
-app.use("/message", messageController)
+
+let passageConfig = {
+  appID: "YOUR_APP_ID",
+  apiKey: "YOUR_API_KEY",
+};
 
 
 const passage = new Passage({

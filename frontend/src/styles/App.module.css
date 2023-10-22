@@ -1,30 +1,12 @@
-
 .mainContainer {
-    padding: 4rem;
-    
-    
+    background: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    width: 310px;
+    min-height: 310px;
+    margin: 30px auto;
 }
-
-.listing-img-large {
-    max-height: 65vh;
+.footer {
+    text-align: center;
+    font-size: 18px;
 }
-
-.view h1 {
-    color: #012f2d;
-    padding: 4rem;
-}
-
-.view .listing {
-    border: solid 1px #d6f0bc;
-    border-radius: 8px;
-    padding: 0.5rem 4rem;
-    background: linear-gradient(#d6f0bc,#d6f0bc);
-    color: #012f2d;
-    }
-
-.view p  {
-    color: #012f2d;
-    margin-right:15rem;
-    padding-left: 8rem;
-}
-
