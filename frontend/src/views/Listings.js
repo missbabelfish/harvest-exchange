@@ -36,7 +36,7 @@ export default function Listing() {
 
     return (
         <div className={styles.view}>
-            <h1 >Browse Listings</h1>
+            <h1>Browse Listings</h1>
             {listingElements}
             {/* <LogoutButton /> */}
         </div>
