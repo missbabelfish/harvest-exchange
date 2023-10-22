@@ -8,7 +8,7 @@ export const LogoutButton = () => {
 
   const signout = () => {
     logout();
-    navigate("/");
+    navigate("/login");
   };
   return <button onClick={signout}>Sign Out</button>;
 };
