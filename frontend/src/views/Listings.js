@@ -25,7 +25,7 @@ export default function Listing() {
         <div key={listing._id}>
             <Link to={`/listings/${listing._id}`}>
 
-                <img className={styles.ImgLrg} src={listing.imageUrl}  alt="" />
+                <img className={styles.imgSmall} src={listing.image || 'https://picsum.photos/150/120' } alt={listing.text} />
                 <div className={styles.Item}>
 
                     <h3>{listing.title}</h3>
@@ -39,7 +39,7 @@ export default function Listing() {
 
     return (
         <div className={styles.view}>
-            <h1 >Browse Listings</h1>
+            <h1>Browse Listings</h1>
             {listingElements}
             {/* <LogoutButton /> */}
         </div>

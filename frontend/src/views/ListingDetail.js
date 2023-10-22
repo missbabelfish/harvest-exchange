@@ -23,8 +23,8 @@ export default function ListingDetail() {
     return (
         <div>
             {listing ? (
-    <div>
-                    <img src={listing.image} alt="Listing"/>
+                <div>
+                    <img src={listing.image || 'https://picsum.photos/300/400' } alt={listing.text}/>
                     <p>{listing.category}</p>
                     <h2>{listing.title}</h2>
                     <p>posted on {listing.createdAt}</p>
@@ -32,6 +32,9 @@ export default function ListingDetail() {
                     <p>{listing.text}</p>
                     <button>
                         <a href={chatUrl}>Message</a>
+                    </button>
+                    <button>
+                        <a href="/listings">Back to All Listings</a>
                     </button>
                 </div>
             ) : <h2>Loading...</h2>}

@@ -3,18 +3,10 @@ import { slide as Menu } from 'react-burger-menu';
 import '../styles/Sidebar.css'
 import { Link } from "react-router-dom";
 import { usePassageLogout } from "../hooks";
-import { useNavigate } from 'react-router-dom';
 
 
 export default function Sidebar (props) {
   const { logout } = usePassageLogout();
-
-  // const navigate = useNavigate();
-
-  // const signout = () => {
-  //     logout();
-  //     navigate("/");
-  // };
 
   const closeMenu = () => document.querySelector(".closeMenu").click()
 
