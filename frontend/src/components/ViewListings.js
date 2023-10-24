@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 const PostList = () => {
   const [posts, setPosts] = useState([]);
   const BASE_URL = "http://localhost:8000";
+  const [filter, setFilter] = useState({
+    location: "",
+    distance: "",
+    category: "",
+    price: 0
+  })
 
   const getPosts = async () => {
     try {
@@ -19,6 +25,13 @@ const PostList = () => {
   useEffect(() => {
     getPosts();
   }, []);
+
+  const handleChange = (event) => {
+    const userInput = { ...filter };
+    userInput[event.target.name] = event.target.value;
+    setFilter(userInput);
+  };
+
 
   return (
     <>
