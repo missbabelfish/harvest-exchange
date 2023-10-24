@@ -23,6 +23,21 @@ const PostList = () => {
   return (
     <>
       <h2>Listing posts</h2>
+    <form >
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" value=""></input>
+        <label for="distance">Distance:</label>
+        <input type="text" id="distance" name="distance" value=""></input>
+        <label for="category">category:</label>
+        <select name="category" id="category">
+            <option value="produce">produce</option>
+            <option value="seed">seed</option>
+            <option value="live plant">live plant</option>
+        </select>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" value=""></input>
+    </form>
+
       <ul>
         {posts &&
           posts.map((post, index) => (
