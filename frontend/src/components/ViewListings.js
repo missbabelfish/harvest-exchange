@@ -32,6 +32,11 @@ const PostList = () => {
     setFilter(userInput);
   };
 
+  const handleChange2 = (event) => {
+    const userInput = { ...filter };
+    userInput[event.target.name] = event.target.value;
+    setFilter(userInput);
+  };
 
   return (
     <>
@@ -40,9 +45,15 @@ const PostList = () => {
         <label for="location">Location:</label>
         <input type="text" id="location" name="location" value={filter.location} onChange={handleChange}></input>
         <label for="distance">Distance:</label>
-        <input type="text" id="distance" name="distance" value={filter.distance} onChange={handleChange}></input>
+        <select name="distance" id="distance" value={filter.distance} onChange={handleChange2}>
+            <option value="5">5 miles</option>
+            <option value="10">10 miles</option>
+            <option value="15">15 miles</option>
+            <option value="20">20 miles</option>
+            <option value="25">25 miles</option>
+        </select>
         <label for="category">category:</label>
-        <select name="category" id="category">
+        <select name="category" id="category" value={filter.category} onChange={handleChange}>
             <option value="produce">produce</option>
             <option value="seed">seed</option>
             <option value="live plant">live plant</option>
@@ -54,9 +65,7 @@ const PostList = () => {
       <ul>
         {posts &&
           posts.map((post, index) => (
-       
             <div className="HomePosts" key={index}>
-
               <Link key={post._id} to={`/listing/viewListing/${post._id}`}>
                 <div className="listingTitle">
                     <h1> {post.title}</h1>
