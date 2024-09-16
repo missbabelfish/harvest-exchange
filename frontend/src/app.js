@@ -31,7 +31,7 @@ function App() {
             <Route path="/:userID/favorites" element={<Favorites />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} /> 
-            <Route path="/chat" element={<Chat />} />
+            <Route path="/chat/:otherId" element={<Chat />} />
             <Route path="/learn" element={<Learn />} />
           </Route>
         </Routes>

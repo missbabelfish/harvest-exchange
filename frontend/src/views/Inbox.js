@@ -2,36 +2,56 @@ import styles from "../styles/Inbox.module.css";
 import React from 'react'
 import axios from 'axios'
 //import { useParams } from 'react-router-dom';
-import { usePassageUserInfo } from "../hooks/";
+//import { usePassageUserInfo } from "../hooks/";
 import { Link } from 'react-router-dom'
+import {GetUserProfile, ServerUrl} from '../utils/utils'
 
-var  SERVER_URL=process.env.SERVER_URL;
-SERVER_URL="http://localhost:8000"
+const   SERVER_URL=ServerUrl();
 
 export default function  Inbox() {
     console.log("Start of Inbox");
-    console.log(process.env);
+//    console.log("process.env",process.env);
 
-    const { userInfo, loading } = usePassageUserInfo();
-//    const { id } = userInfo;
-    const [listings, setListings] = React.useState([]);
-console.log("userInfo:", userInfo);
-console.log("listing:", listings);
-console.log("loading:", loading);
+//const [userData, setUserData] = React.useState(null);
+const [userID, setUserID] = React.useState(null)
 
+React.useEffect(() => 
+ {
+    async function  getUserData() 
+  {
+    console.log("getUserData");
+    const data = await GetUserProfile();
+    if (data)
+    {
+      console.log("data", data);
+//      setUserData(data);
+      setUserID(data._id);
+    }
+  };
+  getUserData();
+}, []);
+
+//console.log("userInfo:", userData);
+console.log("userID:", userID);
+
+
+
+const [listings, setListings] = React.useState([]);
     // fetch listings from db
     React.useEffect(() => 
     {
-        if (userInfo)
+        if (userID)
         {
             const getAllListings = async () => {
-                const allListings = await axios.get(SERVER_URL+'/message/penpals/'+ userInfo.id); //6530076dd128d58567d48136'); // 
+                const allListings = await axios.get(SERVER_URL+'/message/penpals/'+ userID); //6530076dd128d58567d48136'); // 
                 console.log(allListings.data.writers)
                 setListings(allListings.data.writers)
             };
             getAllListings();
         }
-    }, [userInfo])
+    }, [userID])
+    console.log("listing:", listings);
+
 
     const listingElements = 
     listings.map(listing => (
@@ -39,7 +59,7 @@ console.log("loading:", loading);
     
         <tr key={listing._id}>
             <td>
-                <Link to={`/chatbox/${listing.Id}`}>
+                <Link to={`/chat/${listing.Id}`}>
                     <span className={styles.Item}>{listing.firstname} {listing.lastname}</span>
                 </Link>
             </td>
@@ -64,7 +84,9 @@ console.log("loading:", loading);
                     <td>Unread?</td>
                 </tr>
                 </thead> 
+                <tbody>
                 {listingElements}
+                </tbody>
             </table>
         </div>
             )

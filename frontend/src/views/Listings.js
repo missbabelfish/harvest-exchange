@@ -2,7 +2,10 @@ import styles from "../styles/Listings.module.css";
 import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import LogoutButton from "../components/LogoutButton";
+import {GetUserProfile, ServerUrl} from '../utils/utils'
 
+const   SERVER_URL=ServerUrl();
 export default function Listing() {
     // initialize state
     const [listings, setListings] = React.useState([])
@@ -10,7 +13,7 @@ export default function Listing() {
     // fetch listings from db
     React.useEffect(() => {
         const getAllListings = async () => {
-            const allListings = await axios.get('http://localhost:8000/listing/')
+            const allListings = await axios.get(SERVER_URL + '/listing/')
             console.log(allListings.data)
             setListings(allListings.data)
         }

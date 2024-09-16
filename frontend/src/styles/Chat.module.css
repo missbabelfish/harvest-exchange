@@ -1,0 +1,27 @@
+.OutGoing
+{
+    background-color: cadetblue;
+    color:white;
+    text-align: right;
+    float:right;
+    display:inline-block;
+}
+
+.Outer
+{
+    display:block;
+}
+
+
+.InComing
+{
+    background-color:cornsilk;
+    color:black;
+    text-align: left;
+    display:inline-block;
+}
+
+.chatTbl
+{
+    width:100%
+}
